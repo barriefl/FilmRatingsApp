@@ -15,6 +15,9 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using FilmRatingsApp.Views;
+using Microsoft.Extensions.DependencyInjection;
+using FilmRatingsApp.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,13 +30,33 @@ namespace FilmRatingsApp
     public partial class App : Application
     {
         /// <summary>
+        /// Gets the instance to resolve application services.
+        /// </summary>
+        public ServiceProvider Services { get; }
+
+        /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
             this.InitializeComponent();
+
+            /// <summary>
+            /// Configures the services for the application.
+            /// </summary>
+            ServiceCollection services = new ServiceCollection();
+
+            // ViewModels
+            services.AddTransient<HomeViewModel>();
+
+            Services = services.BuildServiceProvider();
         }
+
+        /// <summary>
+        /// Gets the current app instance in use.
+        /// </summary>
+        public new static App Current => (App)Application.Current;
 
         /// <summary>
         /// Invoked when the application is launched.
@@ -42,7 +65,14 @@ namespace FilmRatingsApp
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new MainWindow();
+            // Create a Frame to act as the navigation context and navigate to the first page
+            Frame rootFrame = new Frame();
+            // Place the frame in the current Window
+            this.m_window.Content = rootFrame;
+            // Ensure the current window is active
             m_window.Activate();
+            // Navigate to the first page
+            rootFrame.Navigate(typeof(HomePage));
         }
 
         private Window m_window;
