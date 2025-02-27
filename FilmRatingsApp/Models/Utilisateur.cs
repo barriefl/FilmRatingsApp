@@ -65,5 +65,42 @@ namespace FilmRatingsApp.Models
 
         [InverseProperty(nameof(Notation.UtilisateurNotant))]
         public ICollection<Notation> NotesUtilisateur { get; set; } = new List<Notation>();
+
+        public override bool Equals(object obj)
+        {
+            return obj is Utilisateur utilisateur &&
+                   this.UtilisateurId == utilisateur.UtilisateurId &&
+                   this.Nom == utilisateur.Nom &&
+                   this.Prenom == utilisateur.Prenom &&
+                   this.Mobile == utilisateur.Mobile &&
+                   this.Mail == utilisateur.Mail &&
+                   this.Pwd == utilisateur.Pwd &&
+                   this.Rue == utilisateur.Rue &&
+                   this.CodePostal == utilisateur.CodePostal &&
+                   this.Ville == utilisateur.Ville &&
+                   this.Pays == utilisateur.Pays &&
+                   this.Latitude == utilisateur.Latitude &&
+                   this.Longitude == utilisateur.Longitude &&
+                   EqualityComparer<ICollection<Notation>>.Default.Equals(this.NotesUtilisateur, utilisateur.NotesUtilisateur);
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(this.UtilisateurId);
+            hash.Add(this.Nom);
+            hash.Add(this.Prenom);
+            hash.Add(this.Mobile);
+            hash.Add(this.Mail);
+            hash.Add(this.Pwd);
+            hash.Add(this.Rue);
+            hash.Add(this.CodePostal);
+            hash.Add(this.Ville);
+            hash.Add(this.Pays);
+            hash.Add(this.Latitude);
+            hash.Add(this.Longitude);
+            hash.Add(this.NotesUtilisateur);
+            return hash.ToHashCode();
+        }
     }
 }
