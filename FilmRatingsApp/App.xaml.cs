@@ -49,6 +49,7 @@ namespace FilmRatingsApp
 
             // ViewModels
             services.AddTransient<HomeViewModel>();
+            services.AddTransient<UtilisateurViewModel>();
 
             Services = services.BuildServiceProvider();
         }
@@ -73,8 +74,11 @@ namespace FilmRatingsApp
             m_window.Activate();
             // Navigate to the first page
             rootFrame.Navigate(typeof(HomePage));
+            MainRoot = m_window.Content as FrameworkElement;
         }
 
-        private Window m_window;
+        public Window m_window;
+
+        public static FrameworkElement MainRoot { get; private set; }
     }
 }

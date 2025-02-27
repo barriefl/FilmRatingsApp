@@ -23,12 +23,12 @@ namespace FilmRatingsApp.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class HomePage : Page
+    public sealed partial class UtilisateurPage : Page
     {
-        public HomePage()
+        public UtilisateurPage()
         {
             this.InitializeComponent();
-            this.DataContext = App.Current.Services.GetService<HomeViewModel>();
+            this.DataContext = App.Current.Services.GetService<UtilisateurViewModel>();
         }
 
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)

@@ -34,5 +34,72 @@ namespace FilmRatingsApp.Services
                 return null;
             }
         }
+
+        public async Task<Utilisateur> GetUtilisateurByIdAsync(string nomController, int utilisateurId)
+        {
+            try
+            {
+                string url = string.Concat(nomController, "/GetById/", utilisateurId);
+                return await client.GetFromJsonAsync<Utilisateur>(url);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<Utilisateur> GetUtilisateurByEmailAsync(string nomController, string utilisateurEmail)
+        {
+            try
+            {
+                string url = string.Concat(nomController, "/GetByEmail/", utilisateurEmail);
+                return await client.GetFromJsonAsync<Utilisateur>(url);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> PutUtilisateurAsync(string nomController, Utilisateur utilisateur)
+        {
+            try
+            {
+                string url = string.Concat(nomController, "/", utilisateur.UtilisateurId);
+                var reponse = await client.PutAsJsonAsync(url, utilisateur);
+                return reponse.IsSuccessStatusCode;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> PostUtilisateurAsync(string nomController, Utilisateur utilisateur)
+        {
+            try
+            {
+                var reponse = await client.PostAsJsonAsync(nomController, utilisateur);
+                return reponse.IsSuccessStatusCode;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteUtilisateurAsync(string nomController, int utilisateurId)
+        {
+            try
+            {
+                var url = string.Concat(nomController + "/", utilisateurId);
+                var reponse = await client.DeleteAsync(url);
+                return reponse.IsSuccessStatusCode;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }
